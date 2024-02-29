@@ -1,0 +1,120 @@
+drop database hotel;
+create database hotel;
+use hotel;
+/*drop table cadastro_hospede;*/
+create table cadastro_hospede (
+    cod int not null primary key auto_increment,
+	nome varchar (40) NOT NULL,
+    rg int (8) NOT NULL,
+    cpf Varchar(15) NOT null, 
+    rua varchar (30),
+    numero int (5),
+    bairro varchar (20),
+    cidade varchar (30) NOT NULL,
+    estado varchar (2) NOT NULL,
+    cep int (8) NOT NULL,
+    email varchar (50) NOT NULL,
+    telefone Varchar(15) NOT null, 
+    data_nascimento varchar(10) NOT NULL,
+    genero char (1),
+    cod_motivo int (3),
+    cod_veiculo int (5),
+    status_ varchar(10)
+);
+            
+select * from cadastro_hospede;            
+            
+create table cadastro_dependentes (
+	cod int not null primary key auto_increment,
+	nome varchar (40) NOT NULL,
+    data_nascimento varchar(10) NOT NULL,
+    cod_hospede int (5) NOT NULL,
+    rg int (8) not null
+    );
+    
+select * from cadastro_dependentes;
+
+create table cadastro_carro (
+	cod int AUTO_INCREMENT PRIMARY KEY,
+    placa varchar(10) not null,
+    cor varchar (10) NOT NULL,
+    modelo varchar (100) NOT NULL,
+    cod_hospede int (5) NOT NULL
+    );
+
+select * from cadastro_carro where placa like '%%' and cod_hospede='1'
+select * from cadastro_carro;
+
+create table pedido (
+	cod_pedido int AUTO_INCREMENT PRIMARY KEY,
+    cod_hospede int (5) NOT NULL,
+    data_pedido varchar(10) NOT NULL,
+    valor_total double NOT NULL,
+    status_ varchar(10) not null
+);
+
+create table reserva (
+	cod_reserva int AUTO_INCREMENT PRIMARY KEY,
+    cod_hospede int(5) NOT NULL,
+    data_entrada varchar(10) NOT NULL,
+    data_saida varchar(10) NOT NULL,
+    cod_quarto int (5) NOT NULL
+);
+select * from reserva;
+select * from reserva r
+left join cadastro_hospede h on r.cod_hospede=h.cod
+left join cadastro_quarto q on r.cod_quarto=q.cod_quarto
+where cod_reserva = ;
+ 
+select * from cadastro_hospede;
+
+create table cadastro_quarto (
+	cod_quarto int AUTO_INCREMENT PRIMARY KEY,
+	numero int (4) NOT NULL,
+	andar int (2) NOT NULL,
+	cod_categoria int (3) NOT NULL
+);
+
+select * from cadastro_quarto;
+
+create table checagem (
+    cod int not null primary key auto_increment,
+	data_check varchar(10) NOT NULL,
+    hora_check varchar (5) NOT NULL,
+    tipo_check varchar (10) NOT NULL,
+    cod_hospede int (5) NOT NULL,
+    cod_quarto int (4) NOT NULL,
+    data_saida varchar(10) NOT NULL
+);
+
+select r.cod,r.data_check,r.hora_check,r.tipo_check,r.cod_hospede,r.cod_quarto,h.nome,q.numero,r.data_saida from checagem r
+left join cadastro_hospede h on r.cod_hospede=h.cod
+left join cadastro_quarto q on r.cod_quarto=q.cod_quarto
+where cod = ;
+select r.cod as cod_check,r.data_check,r.hora_check,r.tipo_check,r.cod_hospede,r.cod_quarto,h.nome,q.numero from checagem r
+left join cadastro_hospede h on r.cod_hospede=h.cod
+left join cadastro_quarto q on r.cod_quarto=q.cod_quarto
+where cod = '1' and r.data_saida=''
+select * from cadastro_quarto
+drop table itens_pedido
+create table itens_pedido (
+	cod int not null primary key auto_increment,
+    cod_pedido int(5),
+    cod_produto int(5),
+    quantidade double 
+);
+
+create table categoria_quarto (
+	cod int not null AUTO_INCREMENT PRIMARY KEY,
+	descricao varchar (150) NOT NULL,
+    valor double NOT NULL,
+    itens varchar (200) NOT NULL
+);
+select * from categoria_quarto;
+
+create table produto (
+	cod int AUTO_INCREMENT PRIMARY KEY,
+    descricao varchar (80) NOT NULL,
+    valor_unitario double NOT NULL,
+    stats varchar(3)
+);
